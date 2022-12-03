@@ -89,7 +89,8 @@ if(isset($_REQUEST['req_type']) && $_REQUEST['req_type']!=""){
             <thead>
                 <tr>
                     <th>File Name</th>
-                    <th>File Id</th>
+                    <th>Preview</th>
+                    <th>Action</th>
                 </tr>
             </thead>
             <tbody>
@@ -112,13 +113,25 @@ if(isset($_REQUEST['req_type']) && $_REQUEST['req_type']!=""){
                             <td><?php echo $file->getName(); ?></td>
                             <td>
                                 <?php 
+                                if($file["mimeType"] == "image/jpeg" || $file["mimeType"] == "image/png" || $file["mimeType"] == "image/jpg"){
+                                ?>
+                                    <a href="https://drive.google.com/open?id=<?php echo $file->getId(); ?>" target="_blank">
+                                        <img src="https://drive.google.com/uc?export=view&id=<?php echo $file->getId(); ?>" width="100px">
+                                    </a>
+                                <?php
+                                }
+                                ?>
+                            </td>
+                            <td>
+                            <?php 
                                 if($file["mimeType"]=="application/vnd.google-apps.folder"){
                                 ?>
-                                <a href="<?php echo "details.php?folder_id=".$file->getId(); ?>">View</a>
+                                    <a href="<?php echo "details.php?folder_id=".$file->getId(); ?>">View</a>
                                 <?php
                                 }else{
                                 ?>
-                                <a href="<?php echo "download_file.php?file_id=".$file->getId(); ?>">Download File</a>
+                                    <a href="https://drive.google.com/open?id=<?php echo $file->getId(); ?>" target="_blank">Open File</a> | 
+                                    <a href="<?php echo "download_file.php?file_id=".$file->getId(); ?>">Download File</a>
                                 <?php
                                 }
                                 ?>
